@@ -10,17 +10,19 @@ const RESULT_COMPUTER_WINS = 'The computer has won';
 let gameIsRunning = false;
 
 const getPlayerChoice = () => {
-    let selection = prompt(`Please choose ${ROCK}, ${PAPER}, ${SCISSORS}`, '').toUpperCase();
+    const selection = prompt(
+        `Please choose ${ROCK}, ${PAPER}, ${SCISSORS}`,
+        ''
+    ).toUpperCase();
     if (
         selection !== ROCK &&
         selection !== PAPER &&
         selection !== SCISSORS
     ) {
         alert(`we choose ${DEFAULT_USER_CHOICE} for you !`);
-        return DEFAULT_USER_CHOICE;
+        return;
     }
     return selection;
-
 }
 
 const getComputerChoice = () => {
@@ -34,7 +36,7 @@ const getComputerChoice = () => {
     }
 };
 
-const getWinner = (cChoice, pChoice) =>
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) =>
     cChoice === pChoice
         ? RESULT_DRAW
         : (cChoice === ROCK && pChoice === PAPER) ||
@@ -43,18 +45,6 @@ const getWinner = (cChoice, pChoice) =>
         ? RESULT_PLAYER_WINS
         : RESULT_COMPUTER_WINS;
 
-    // if(cChoice == pChoice) {
-    //     return RESULT_DRAW;
-    // } else if (
-    //     cChoice === ROCK && pChoice === PAPER ||
-    //     cChoice == PAPER && pChoice == SCISSORS ||
-    //     cChoice === SCISSORS && pChoice === ROCK ) {
-    //     return RESULT_PLAYER_WINS;
-    // } else {
-    //     return RESULT_COMPUTER_WINS;
-    // }
-// }
-
 startGameBtn.addEventListener('click', () => {
     if (gameIsRunning) {
         return ;
@@ -62,16 +52,21 @@ startGameBtn.addEventListener('click', () => {
     gameIsRunning = true;
     console.log('Game is starting...');
     const playerChoice = getPlayerChoice();
-    console.log(`The player selected ${playerChoice}`);
+    console.log(`player value is ${playerChoice}`);
     const computerChoice = getComputerChoice();
-    console.log(`The computer selected ${computerChoice}`);
-    const winner = getWinner(computerChoice, playerChoice);
-    console.log(winner);
-    let message = `You picked ${playerChoice} and the computer picked ${computerChoice} so `;
+    console.log(`computer choice is ${computerChoice}`);
+    let winner;
+    if(playerChoice) {
+        winner = getWinner(computerChoice, playerChoice);
+    } else {
+        winner = getWinner(computerChoice);
+    }
+
+    let message = `You picked ${playerChoice || DEFAULT_USER_CHOICE} and the computer picked ${computerChoice} so `;
     if (winner === RESULT_DRAW) {
        message = message + 'you had a draw.';
-    } else if (winner === RESULT_COMPUTER_WINS) {
-        message = message + 'the computer won.';
+    } else if (winner === RESULT_PLAYER_WINS) {
+        message = message + 'the player won.';
     } else {
         message = message + 'the computer won.';
     }
