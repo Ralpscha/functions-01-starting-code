@@ -76,34 +76,42 @@
 
 // not related to the game
 
-const sumUp = (resultHandler, message, ...numbers) => {
+const ADD_MESSAGE = 'The result after adding the numbers is ';
+const SUBTRACT_MESSAGE = 'The result after subtracting the numbers is ';
+
+const combine = (resultHandler, operation, ...numbers) => {
     const validateNum = (number) => {
         return isNaN(number) ? 0 : number;
     }
     let sum = 0;
     for(const number of numbers) {
-        sum += validateNum(number);
+        if(operation === 'ADD') {
+            sum += validateNum(number);
+        } else {
+            sum -= validateNum(number);
+        }
+
     }
-    resultHandler(sum, message);
+    resultHandler(sum);
 };
 
-const subtractUp = (resultHandler, message, ...numbers) => {
-    const validateNum = (number) => {
-        return isNaN(number) ? 0 : number;
-    }
-    let sum = 0;
-    for(const number of numbers) {
-        sum -= validateNum(number);
-    }
-    resultHandler(sum, message);
+// const subtractUp = (resultHandler, ...numbers) => {
+//     const validateNum = (number) => {
+//         return isNaN(number) ? 0 : number;
+//     }
+//     let sum = 0;
+//     for(const number of numbers) {
+//         sum -= validateNum(number);
+//     }
+//     resultHandler(sum, 'The result after subtracting the numbers is ');
+// }
+
+const showResult = (messageText, result)=> {
+    alert(messageText + result);
 }
 
-const showResult = (result, message)=> {
-    alert(message + result);
-}
-
-subtractUp(showResult, 'The result after subtracting the numbers is ', 10,'hi',2);
-sumUp(showResult, 'The result after adding the numbers is ',  1,3,4);
+combine(showResult.bind(this, ADD_MESSAGE),'ADD', 10,'hi',2);
+combine(showResult.bind(this, SUBTRACT_MESSAGE), 'SUBTRACT', 1,3, 'potato',4);
 
 
 
