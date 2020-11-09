@@ -91,5 +91,5 @@ const showResult = (result)=> {
     alert('The result after adding is ' + result);
 }
 
-sumUp(showResult,'hallo',3,4));
+sumUp(showResult,'hallo',3,4);
 
